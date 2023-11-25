@@ -22,7 +22,8 @@ const DealsSummary = ({ runServerless }) => {
       .then((serverlessResponse) => {
         if (serverlessResponse.status == "SUCCESS") {
           const { response } = serverlessResponse;
-          setDeals([response.deals]);
+          setDeals(response.deals);
+          console.log("hello",response.deals);
         } else {
           setErrorMessage(serverlessResponse.message);
         }

@@ -31,8 +31,10 @@ async function getAssociatedDeals(hs_object_id) {
     );
 
     // console.log(JSON.stringify(apiResponse, null, 2));
-    const objectID = apiResponse.associations.p39615433_properties.results[0].id;
-    // console.log(objectID);
+    const objectIDs = apiResponse.associations.p39615433_properties.results.map(result=>result.id);
+    console.log(objectIDs);
+    let allResponses = [];
+    for(objectID of objectIDs){
     const objectTypeNew = "properties";
     const objectIdNew = objectID;
     const propertiesNew = ["property_name"];
@@ -52,14 +54,16 @@ async function getAssociatedDeals(hs_object_id) {
           archivedNew,
           idPropertyNew
         );
-        return(apiResponseProperty);
+        // return(apiResponseProperty);
+        allResponses.push(apiResponseProperty);
       // console.log(JSON.stringify(apiResponseProperty, null, 2));
     } catch (e) {
       e.message === "HTTP request failed"
         ? console.error(JSON.stringify(e.response, null, 2))
         : console.error(e);
-    }
-    return apiResponse;
+    }}
+    return allResponses;
+    // return apiResponse;
   } catch (e) {
     e.message === "HTTP request failed"
       ? console.error(JSON.stringify(e.response, null, 2))
