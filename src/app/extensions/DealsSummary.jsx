@@ -25,7 +25,7 @@ const DealsSummary = ({ runServerless }) => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [deals, setDeals] = useState([]);
-  const [formValue, setFormValue] = useState([]);
+  const [formValue, setFormValue] = useState({});
   useEffect(() => {
     // Request statistics data from serverless function
     runServerless({
@@ -81,15 +81,15 @@ const DealsSummary = ({ runServerless }) => {
               <TableCell>
                 <Form
                   preventDefault={true}
-                  onSubmit={MultiSelectControlledExample}
+                  onSubmit={(e) => MultiSelectControlledExample(deal.id, e)}
                 >
                   <MultiSelect
-                    value={formValue}
+                    value={formValue[deal.id] || []}
                     placeholder="Pick your Products"
                     label="Select Mutiple Products"
                     name="selectProduct"
                     required={true}
-                    onChange={(value) => setFormValue(value)}
+                    onChange={(value) => setFormValue({...formValue, [deal.id]: value})}
                     options={[
                       { label: "NutureSkill", value: "p1" },
                       { label: "ChatSkill", value: "p2" },
