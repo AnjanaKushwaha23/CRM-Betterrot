@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Alert, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, Text } from "@hubspot/ui-extensions";
+import {
+  Alert,
+  LoadingSpinner,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
+  Text,
+  Form,
+  MultiSelect,
+  Button,
+} from "@hubspot/ui-extensions";
 import { hubspot } from "@hubspot/ui-extensions";
 
 // Define the extension to be run within the Hubspot CRM
@@ -12,7 +25,7 @@ const DealsSummary = ({ runServerless }) => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [deals, setDeals] = useState([]);
-
+  const [formValue, setFormValue] = useState([]);
   useEffect(() => {
     // Request statistics data from serverless function
     runServerless({
@@ -23,7 +36,7 @@ const DealsSummary = ({ runServerless }) => {
         if (serverlessResponse.status == "SUCCESS") {
           const { response } = serverlessResponse;
           setDeals(response.deals);
-          console.log("hello",response.deals);
+          console.log("hello", response.deals);
         } else {
           setErrorMessage(serverlessResponse.message);
         }
@@ -35,8 +48,10 @@ const DealsSummary = ({ runServerless }) => {
         setLoading(false);
       });
   }, [runServerless]);
-
-
+  function MultiSelectControlledExample(e) {
+    e.preventDefault();
+    console.log(formValue, "hola");
+  }
   if (loading) {
     // If loading, show a spinner
     return <LoadingSpinner />;
@@ -60,12 +75,31 @@ const DealsSummary = ({ runServerless }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-        {deals.map((deal) => (
-          <TableRow key={deal.id}>
-            <TableCell>{deal.properties.property_name}</TableCell>
-            <TableCell>xyz</TableCell>
-          </TableRow>
-        ))}
+          {deals.map((deal) => (
+            <TableRow key={deal.id}>
+              <TableCell>{deal.properties.property_name}</TableCell>
+              <TableCell>
+                <Form
+                  preventDefault={true}
+                  onSubmit={MultiSelectControlledExample}
+                >
+                  <MultiSelect
+                    value={formValue}
+                    placeholder="Pick your Products"
+                    label="Select Mutiple Products"
+                    name="selectProduct"
+                    required={true}
+                    onChange={(value) => setFormValue(value)}
+                    options={[
+                      { label: "NutureSkill", value: "p1" },
+                      { label: "ChatSkill", value: "p2" },
+                    ]}
+                  />
+                  <Button type="submit">Submit</Button>
+                </Form>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>
