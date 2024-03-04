@@ -1,0 +1,12 @@
+{
+  "appFunctions": {
+    "get-data": {
+      "file": "get-data.js",
+      "secrets": []
+    },
+    "update-data": {
+      "file": "update-data.js",
+      "secrets": []
+    }
+  }
+}

@@ -1,0 +1,3 @@
+.private-form__set .private-form__label-wrapper .private-form__label--required:after {
+    display: none !important;
+}

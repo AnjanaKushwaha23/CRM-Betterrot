@@ -1,0 +1,26 @@
+{
+  "name": "Property-Skills Mapping",
+  "description": "Property-Skills Mapping",
+  "uid": "deals_summary_app",
+  "scopes": [
+    "crm.objects.contacts.read",
+    "crm.objects.contacts.write",
+    "crm.objects.deals.read",
+    "crm.objects.deals.write",
+    "crm.objects.custom.read",
+    "crm.schemas.deals.write",
+    "crm.schemas.companies.write",
+    "crm.schemas.contacts.write",
+    "crm.objects.custom.write"
+  ],
+  "public": false,
+  "extensions": {
+    "crm": {
+      "cards": [
+        {
+          "file": "extensions/deals-summary-card.json"
+        }
+      ]
+    }
+  }
+}
